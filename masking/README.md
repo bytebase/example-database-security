@@ -13,7 +13,7 @@ Docs: https://www.bytebase.com/docs/security/data-masking/semantic-types/
 API: https://api.bytebase.com/#tag/settingservice/PATCH/v1/settings/{setting}
 
 ```bash
-curl --request PATCH ${bytebase_url}/v1/settings/bb.workspace.semantic-types \
+curl --request PATCH ${bytebase_url}/v1/settings/SEMANTIC_TYPES \
   --header 'Authorization: Bearer '${bytebase_token} \
   --data @semantic-type.json
 ```
@@ -25,7 +25,7 @@ Docs: https://www.bytebase.com/docs/security/data-masking/global-masking-rule/
 API: https://api.bytebase.com/#tag/orgpolicyservice/PATCH/v1/policies/{policy}
 
 ```bash
-curl --request PATCH "${bytebase_url}/v1/policies/masking_rule?allow_missing=true&update_mask=payload" \
+curl --request PATCH "${bytebase_url}/v1/workspaces/-/policies/masking_rule?allow_missing=true&update_mask=payload" \
   --header 'Authorization: Bearer '${bytebase_token} \
   --data @global-masking-rule.json
 ```
@@ -37,14 +37,14 @@ Docs: https://www.bytebase.com/docs/security/data-masking/data-classification/
 API: https://api.bytebase.com/#tag/settingservice/PATCH/v1/settings/{setting}
 
 ```bash
-curl --request PATCH ${bytebase_url}/v1/settings/bb.workspace.data-classification \
+curl --request PATCH ${bytebase_url}/v1/settings/DATA_CLASSIFICATION \
   --header 'Authorization: Bearer '${bytebase_token} \
   --data @data-classification.json
 ```
 
-## Project-level masking exception
+## Project-level masking exemption
 
-Project-level masking exception to overrule the workspace-level setting.
+Project-level masking exemption to overrule the workspace-level setting.
 
 https://github.com/bytebase/database-security-github-actions-example/tree/main/masking/projects/project-sample
 

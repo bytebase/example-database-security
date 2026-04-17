@@ -1,5 +1,5 @@
 {
-  "name": "policies/masking_rule",
+  "name": "workspaces/-/policies/masking_rule",
   "inheritFromParent": false,
   "type": "MASKING_RULE",
   "maskingRulePolicy": {
@@ -7,7 +7,7 @@
       {
         "id": "76356d81-6231-4128-9be7-2c549fc505f5",
         "condition": {
-          "expression": "classification_level in [\"2\"]",
+          "expression": "resource.classification_level in [2]",
           "title": "",
           "description": ""
         },
@@ -16,7 +16,7 @@
       {
         "id": "1ddc47c9-6ab6-4760-accd-947bc1a5f155",
         "condition": {
-          "expression": "classification_level in [\"4\"]",
+          "expression": "resource.classification_level in [4]",
           "title": "",
           "description": ""
         },

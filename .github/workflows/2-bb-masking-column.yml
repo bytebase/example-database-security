@@ -1,4 +1,4 @@
-name: Bytebase Masking Policy Update Column and Exception
+name: Bytebase Masking Policy Update Column and Exemption
 on:
   pull_request:
     types: [closed]
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  bytebase-masking-column-and-exception:
+  bytebase-masking-column-and-exemption:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
@@ -35,7 +35,7 @@ jobs:
         with:
           files: |
             masking/databases/**/**/database-catalog.json
-            masking/projects/**/masking-exception.json
+            masking/projects/**/masking-exemption.json
           since_last_remote_commit: true
           fetch_depth: 0
           include_all_old_new_renamed_files: true
@@ -49,7 +49,7 @@ jobs:
           echo "Modified files:"
           echo "${{ steps.changed-files.outputs.modified_files }}"
           echo "Contains database-catalog.json: ${{ contains(steps.changed-files.outputs.all_changed_files, 'database-catalog.json') }}"
-          echo "Contains masking-exception.json: ${{ contains(steps.changed-files.outputs.all_changed_files, 'masking-exception.json') }}"
+          echo "Contains masking-exemption.json: ${{ contains(steps.changed-files.outputs.all_changed_files, 'masking-exemption.json') }}"
           echo "Raw output:"
           echo "${{ toJSON(steps.changed-files.outputs) }}"
 
@@ -89,17 +89,17 @@ jobs:
             fi
           done
 
-      - name: Apply masking exception policy
-        id: apply-masking-exception
-        if: ${{ steps.changed-files.outputs.any_changed == 'true' && contains(steps.changed-files.outputs.all_changed_files, '/masking-exception.json') }}
+      - name: Apply masking exemption policy
+        id: apply-masking-exemption
+        if: ${{ steps.changed-files.outputs.any_changed == 'true' && contains(steps.changed-files.outputs.all_changed_files, '/masking-exemption.json') }}
         run: |
-          # Process all masking-exception.json files
-          echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | grep "masking-exception.json" | while read -r CHANGED_FILE; do
+          # Process all masking-exemption.json files
+          echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | grep "masking-exemption.json" | while read -r CHANGED_FILE; do
             echo "Processing: $CHANGED_FILE"
             PROJECT_NAME=$(echo "$CHANGED_FILE" | sed -n 's/masking\/projects\/\([^/]*\).*/\1/p')
             echo "PROJECT_NAME=$PROJECT_NAME"
             
-            response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/projects/${PROJECT_NAME}/policies/masking_exception?allow_missing=true&update_mask=payload" \
+            response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/projects/${PROJECT_NAME}/policies/masking_exemption?allow_missing=true&update_mask=payload" \
               --header "Authorization: Bearer ${{ steps.bytebase-login.outputs.token }}" \
               --header "Content-Type: application/json" \
               --data @"$CHANGED_FILE")
@@ -130,7 +130,7 @@ jobs:
         with:
           script: |
             const changedFiles = process.env.CHANGED_FILES || '';
-            let commentBody = `### Update Column Masking and Exception Summary\n\n`;
+            let commentBody = `### Update Column Masking and Exemption Summary\n\n`;
             
             // Add status of merge
             commentBody += `✅ **PR Status:** Merged\n\n`;
@@ -163,18 +163,18 @@ jobs:
               });
             }
 
-            if (changedFiles.includes('masking-exception.json')) {
-              const exceptionStatuses = Object.keys(${{ toJSON(steps.apply-masking-exception.outputs) }} || {})
+            if (changedFiles.includes('masking-exemption.json')) {
+              const exceptionStatuses = Object.keys(${{ toJSON(steps.apply-masking-exemption.outputs) }} || {})
                 .filter(key => key.startsWith('status_code_'))
                 .map(key => ({
                   name: key.replace('status_code_', ''),
-                  status: ${{ toJSON(steps.apply-masking-exception.outputs) }}[key]
+                  status: ${{ toJSON(steps.apply-masking-exemption.outputs) }}[key]
                 }));
               
               exceptionStatuses.forEach(({name, status}) => {
                 apiCallsFound = true;
                 const success = status >= 200 && status < 300;
-                commentBody += `- Masking Exception (${name}): ${success ? '✅' : '❌'} ${status}\n`;
+                commentBody += `- Masking Exemption (${name}): ${success ? '✅' : '❌'} ${status}\n`;
               });
             }
 
