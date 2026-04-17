@@ -6,7 +6,7 @@ API: https://api.bytebase.com/#tag/orgpolicyservice/PATCH/v1/projects/{project}/
 
 ```bash
 export project_id=project-sample
-curl --request PATCH "${bytebase_url}/v1/projects/${project_id}/policies/masking_exemption?allow_missing=true&update_mask=payload" \
+curl --request PATCH "${bytebase_url}/v1/projects/${project_id}/policies/masking_exemption?allowMissing=true&updateMask=payload" \
   --header 'Authorization: Bearer '${bytebase_token} \
   --data @masking-exemption.json
 ```

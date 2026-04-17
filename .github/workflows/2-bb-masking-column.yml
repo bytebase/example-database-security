@@ -99,7 +99,7 @@ jobs:
             PROJECT_NAME=$(echo "$CHANGED_FILE" | sed -n 's/masking\/projects\/\([^/]*\).*/\1/p')
             echo "PROJECT_NAME=$PROJECT_NAME"
             
-            response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/projects/${PROJECT_NAME}/policies/masking_exemption?allow_missing=true&update_mask=payload" \
+            response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/projects/${PROJECT_NAME}/policies/masking_exemption?allowMissing=true&updateMask=payload" \
               --header "Authorization: Bearer ${{ steps.bytebase-login.outputs.token }}" \
               --header "Content-Type: application/json" \
               --data @"$CHANGED_FILE")

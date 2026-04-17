@@ -25,7 +25,7 @@ Docs: https://www.bytebase.com/docs/security/data-masking/global-masking-rule/
 API: https://api.bytebase.com/#tag/orgpolicyservice/PATCH/v1/policies/{policy}
 
 ```bash
-curl --request PATCH "${bytebase_url}/v1/workspaces/-/policies/masking_rule?allow_missing=true&update_mask=payload" \
+curl --request PATCH "${bytebase_url}/v1/workspaces/-/policies/masking_rule?allowMissing=true&updateMask=payload" \
   --header 'Authorization: Bearer '${bytebase_token} \
   --data @global-masking-rule.json
 ```
