@@ -1,11 +1,10 @@
 {
   "inheritFromParent": false,
-  "type": "MASKING_EXCEPTION",
-  "maskingExceptionPolicy": {
-    "maskingExceptions": [
+  "type": "MASKING_EXEMPTION",
+  "maskingExemptionPolicy": {
+    "exemptions": [
       {
-        "action": "EXPORT",
-        "member": "user:dev@example.com",
+        "members": ["user:dev@example.com"],
         "condition": {
           "expression": "resource.instance_id == \"prod-sample-instance\" && resource.database_name == \"hr_prod\" && resource.schema_name == \"public\" && resource.table_name == \"salary\" && resource.column_name == \"amount\"",
           "title": "",
@@ -13,8 +12,7 @@
         }
       },
       {
-        "action": "QUERY",
-        "member": "user:dev2@example.com",
+        "members": ["user:dev2@example.com"],
         "condition": {
           "expression": "resource.instance_id == \"prod-sample-instance\" && resource.database_name == \"hr_prod\" && resource.schema_name == \"public\" && resource.table_name == \"salary\" && resource.column_name == \"amount\"",
           "title": "",
@@ -22,8 +20,7 @@
         }
       },
       {
-        "action": "QUERY",
-        "member": "group:contractor@example.com",
+        "members": ["group:contractor@example.com"],
         "condition": {
           "expression": "resource.instance_id == \"prod-sample-instance\" && resource.database_name == \"hr_prod\" && resource.schema_name == \"public\" && resource.table_name == \"salary\" && resource.column_name == \"amount\"",
           "title": "",

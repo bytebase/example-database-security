@@ -1,7 +1,7 @@
 {
-  "name": "bb.workspace.semantic-types",
+  "name": "settings/SEMANTIC_TYPES",
   "value": {
-    "semanticTypeSettingValue": {
+    "semanticType": {
       "types": [
         {
           "id": "bb.default",

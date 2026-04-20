@@ -1,5 +1,5 @@
 {
-  "name": "policies/masking_rule",
+  "name": "workspaces/-/policies/masking_rule",
   "inheritFromParent": false,
   "type": "MASKING_RULE",
   "maskingRulePolicy": {
@@ -7,7 +7,7 @@
       {
         "id": "76356d81-6231-4128-9be7-2c549fc505f5",
         "condition": {
-          "expression": "environment_id == \"prod\"",
+          "expression": "resource.environment_id == \"prod\"",
           "title": "",
           "description": ""
         },

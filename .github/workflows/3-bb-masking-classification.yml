@@ -65,7 +65,7 @@ jobs:
           CHANGED_FILE="masking/data-classification.json"
           echo "Processing: $CHANGED_FILE"
           
-          response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/settings/bb.workspace.data-classification" \
+          response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/settings/DATA_CLASSIFICATION" \
             --header "Authorization: Bearer ${{ steps.bytebase-login.outputs.token }}" \
             --header "Content-Type: application/json" \
             --data @"$CHANGED_FILE")
@@ -91,8 +91,9 @@ jobs:
           CHANGED_FILE="masking/global-masking-rule-classification.json"     
           echo "Processing: $CHANGED_FILE"
           
-          response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/policies/masking_rule?allow_missing=true&update_mask=payload" \
+          response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/workspaces/-/policies/masking_rule?allowMissing=true&updateMask=payload" \
             --header "Authorization: Bearer ${{ steps.bytebase-login.outputs.token }}" \
+            --header "Content-Type: application/json" \
             --data @"$CHANGED_FILE")
 
           # Extract status code and response body
