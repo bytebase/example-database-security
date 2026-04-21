@@ -106,10 +106,17 @@ jobs:
         id: apply-global-masking-rule
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && contains(steps.changed-files.outputs.all_changed_files, 'global-masking-rule.json') }}
         run: |
-          CHANGED_FILE="masking/global-masking-rule.json"     
+          CHANGED_FILE="masking/global-masking-rule.json"
           echo "Processing: $CHANGED_FILE"
-          
-          response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/workspaces/-/policies/masking_rule?allowMissing=true&updateMask=payload" \
+
+          # Resolve the current workspace resource name. Policy URLs need the
+          # real workspace ID — "workspaces/-" only works for GetWorkspace.
+          WORKSPACE_NAME=$(curl -s \
+            --header "Authorization: Bearer ${{ steps.bytebase-login.outputs.token }}" \
+            "${{ steps.bytebase-login.outputs.api_url }}/workspaces/-" | jq -r '.name')
+          echo "Workspace: $WORKSPACE_NAME"
+
+          response=$(curl -s -w "\n%{http_code}" --request PATCH "${{ steps.bytebase-login.outputs.api_url }}/${WORKSPACE_NAME}/policies/masking_rule?allowMissing=true&updateMask=payload" \
             --header "Authorization: Bearer ${{ steps.bytebase-login.outputs.token }}" \
             --header "Content-Type: application/json" \
             --data @"$CHANGED_FILE")
